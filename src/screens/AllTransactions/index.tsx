@@ -1,14 +1,16 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
+import { Header } from '../../components/ui/Header';
 
 // import { Container } from './styles';
 
 const AllTransactions: React.FC = () => {
   return (
-    <View>
-      <Text>All</Text>
-    </View>
+    <SafeAreaView>
+      <StatusBar barStyle="light-content" backgroundColor="#666DC3" />
+      <Header text="Todas transações" />
+    </SafeAreaView>
   );
-}
+};
 
-export default AllTransactions;
+export { AllTransactions };

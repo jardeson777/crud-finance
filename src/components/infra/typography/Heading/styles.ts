@@ -1,0 +1,36 @@
+import { VariantProps } from 'stitches-native';
+import { styled } from '../../../../global/styles/theme';
+
+export const Container = styled('Text', {
+  fontWeight: 'bold',
+  textAlign: 'center',
+  variants: {
+    fontSize: {
+      xl: {
+        fontSize: 25
+      },
+      lg: {
+        fontSize: 20
+      },
+      md: {
+        fontSize: 15
+      },
+      sm: {
+        fontSize: 12
+      }
+    },
+    color: {
+      white: {
+        color: '$white'
+      },
+      purple1: {
+        color: '$purple1'
+      },
+      purple5: {
+        color: '$purple5'
+      }
+    }
+  }
+});
+
+export type CSSContainerVariants = VariantProps<typeof Container>;

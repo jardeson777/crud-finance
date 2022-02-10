@@ -10,7 +10,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ text, children }) => {
   return (
     <Container>
-      <Heading fontSize="xl" color="white">
+      <Heading fontSize="xl" color="white" textAlign="center">
         {text}
       </Heading>
       {children}

@@ -1,6 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { FontAwesome, EvilIcons } from '@expo/vector-icons';
+import {
+  FontAwesome,
+  Foundation,
+  MaterialCommunityIcons
+} from '@expo/vector-icons';
 
 import { useCallback } from 'react';
 import { AllTransactions } from '../screens/AllTransactions';
@@ -11,7 +15,9 @@ const Tab = createBottomTabNavigator();
 
 export function MyTabs() {
   const iconMinus = useCallback(
-    (color: string) => <EvilIcons name="minus" size={30} color={color} />,
+    (color: string) => (
+      <Foundation name="minus-circle" size={30} color={color} />
+    ),
     []
   );
 
@@ -21,7 +27,13 @@ export function MyTabs() {
   );
 
   const iconPlus = useCallback(
-    (color: string) => <EvilIcons name="plus" size={30} color={color} />,
+    (color: string) => (
+      <MaterialCommunityIcons
+        name="plus-circle-outline"
+        size={27}
+        color={color}
+      />
+    ),
     []
   );
 
@@ -35,14 +47,11 @@ export function MyTabs() {
           tabBarInactiveTintColor: '#BABABA',
           tabBarStyle: {
             backgroundColor: 'white',
-            width: '95%',
             borderRadius: 8,
             position: 'absolute',
-            bottom: 10,
             paddingTop: 7,
             paddingBottom: 7,
-            height: 55,
-            marginStart: '2.5%'
+            height: 60
           }
         }}
       >

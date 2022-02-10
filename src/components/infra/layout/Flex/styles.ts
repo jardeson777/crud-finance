@@ -69,6 +69,16 @@ export const Container = styled('View', {
         paddingTop: 30,
         paddingBottom: 30
       }
+    },
+    fullHeight: {
+      true: {
+        height: '100%'
+      }
+    },
+    fullWidth: {
+      true: {
+        width: '100%'
+      }
     }
   }
 });

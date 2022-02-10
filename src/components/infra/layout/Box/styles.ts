@@ -12,8 +12,24 @@ export const Container = styled('View', {
       purple1: {
         backgroundColor: '$purple1'
       },
+      purple1Light: {
+        backgroundColor: '$purple1Light'
+      },
       purple2: {
         backgroundColor: '$purple2'
+      }
+    },
+    size: {
+      fullWidth: {
+        width: '100%'
+      }
+    },
+    radius: {
+      sm: {
+        borderRadius: 4
+      },
+      md: {
+        borderRadius: 8
       }
     }
   }

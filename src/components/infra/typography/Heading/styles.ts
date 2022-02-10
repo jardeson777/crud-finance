@@ -3,7 +3,6 @@ import { styled } from '../../../../global/styles/theme';
 
 export const Container = styled('Text', {
   fontWeight: 'bold',
-  textAlign: 'center',
   variants: {
     fontSize: {
       xl: {
@@ -28,6 +27,17 @@ export const Container = styled('Text', {
       },
       purple5: {
         color: '$purple5'
+      }
+    },
+    textAlign: {
+      center: {
+        textAlign: 'center'
+      },
+      left: {
+        textAlign: 'left'
+      },
+      right: {
+        textAlign: 'right'
       }
     }
   }

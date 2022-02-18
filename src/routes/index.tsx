@@ -47,7 +47,6 @@ export function MyTabs() {
           tabBarInactiveTintColor: '#BABABA',
           tabBarStyle: {
             backgroundColor: 'white',
-            borderRadius: 8,
             position: 'absolute',
             paddingTop: 7,
             paddingBottom: 7,

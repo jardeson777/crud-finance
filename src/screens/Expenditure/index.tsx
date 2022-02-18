@@ -10,66 +10,16 @@ import Text from '../../components/infra/typography/Text';
 import { Header } from '../../components/ui/Header';
 import Modal from '../../components/ui/Modal';
 import Input from '../../components/infra/form/Input';
+import { useData } from '../../global/hook/useData';
+import { sumExpenditure } from '../../global/utils';
 
 const Expenditure: React.FC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
-  const data = [
-    {
-      id: 1,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 2,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 3,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 4,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 6,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 5,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    }
-  ];
+  const { data } = useData();
+  const dataFilter = data.filter(item => item.type === 'expenditure');
+
+  const sumTotal = sumExpenditure(data);
 
   const handleModal = () => {
     setIsOpenModal(!isOpenModal);
@@ -90,7 +40,7 @@ const Expenditure: React.FC = () => {
               Total de despesa
             </Heading>
             <Heading color="white" fontSize="md" textAlign="left">
-              R$ 300,00
+              R$ {sumTotal.toFixed(2)}
             </Heading>
           </View>
 
@@ -112,33 +62,44 @@ const Expenditure: React.FC = () => {
           marginBottom: 70
         }}
       >
-        {data.map(item => {
+        {dataFilter.map(item => {
           return (
             <Card key={item.id}>
-              <MaterialCommunityIcons
-                name="minus-circle-outline"
-                size={23}
-                color="#666DC3"
-                style={{ marginRight: 10 }}
-              />
-
               <Box style={{ marginRight: 10 }}>
-                <Heading color="purple5" fontSize="md">
-                  {item.title}
-                </Heading>
-                <Text color="white" fontSize="sm">
-                  {item.date}
-                </Text>
-                <Text color="white" fontSize="sm">
-                  {item.description}
-                </Text>
-              </Box>
+                <Flex
+                  direction="row"
+                  alingItems="center"
+                  justifyContent="spaceBetween"
+                >
+                  <Flex direction="row" alingItems="center">
+                    <MaterialCommunityIcons
+                      name="minus-circle-outline"
+                      size={23}
+                      color="#666DC3"
+                      style={{ marginRight: 10 }}
+                    />
 
-              <View>
-                <Heading color="purple5" fontSize="md">
-                  {item.value}
-                </Heading>
-              </View>
+                    <Heading color="purple5" fontSize="md">
+                      {item.title}
+                    </Heading>
+                  </Flex>
+
+                  <Text color="black" fontSize="sm">
+                    {item.date}
+                  </Text>
+                  <View>
+                    <Heading color="purple5" fontSize="md">
+                      - R$ {item.value.toFixed(2)}
+                    </Heading>
+                  </View>
+                </Flex>
+
+                <Box style={{ marginTop: 5, marginLeft: 35 }}>
+                  <Text color="black" fontSize="sm">
+                    {item.description}
+                  </Text>
+                </Box>
+              </Box>
             </Card>
           );
         })}
@@ -162,22 +123,22 @@ const Expenditure: React.FC = () => {
 
           <Box>
             <Heading color="purple5">Título</Heading>
-            <Input />
+            <Input placeholder="Digite um título" />
           </Box>
 
           <Box>
             <Heading color="purple5">Data</Heading>
-            <Input />
+            <Input placeholder="Digite uma data" />
           </Box>
 
           <Box>
             <Heading color="purple5">Descrição</Heading>
-            <Input />
+            <Input placeholder="Digite uma descrição" />
           </Box>
 
           <Box>
             <Heading color="purple5">Valor</Heading>
-            <Input />
+            <Input placeholder="Digite um valor" />
           </Box>
           <Flex direction="row" justifyContent="spaceBetween">
             <Button onPress={handleModal} backgroundColor="none" size="lg">

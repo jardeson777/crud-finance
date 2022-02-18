@@ -1,70 +1,42 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, StatusBar, View } from 'react-native';
-import { Box } from '../../components/infra/layout/Box';
-import Flex from '../../components/infra/layout/Flex';
-import { Heading } from '../../components/infra/typography/Heading';
-import Card from '../../components/ui/Card';
-import { Header } from '../../components/ui/Header';
+import * as Progress from 'react-native-progress';
+
 import Text from '../../components/infra/typography/Text';
+import { Header } from '../../components/ui/Header';
+import Card from '../../components/ui/Card';
+import { Heading } from '../../components/infra/typography/Heading';
+import Flex from '../../components/infra/layout/Flex';
+import { Box } from '../../components/infra/layout/Box';
+import { useData } from '../../global/hook/useData';
+import { sumExpenditure, sumRevenue } from '../../global/utils';
 
 const AllTransactions: React.FC = () => {
-  const data = [
-    {
-      id: 1,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 2,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 3,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '-30,00'
-    },
-    {
-      id: 4,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 6,
-      type: 'expenditure',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '-30,00'
-    },
-    {
-      id: 5,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    }
-  ];
+  const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const { data } = useData();
+
+  const total = sumRevenue(data) - sumExpenditure(data);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsLoading(!isLoading);
+  //   }, 1000);
+  // }, []);
+
+  // if (isLoading) {
+  //   return (
+  //     <Flex justifyContent="center" alingItems="center" fullHeight fullWidth>
+  //       <Progress.Circle size={30} indeterminate />
+  //     </Flex>
+  //   );
+  // }
 
   return (
     <Box backgroundColor="purple1Light">
@@ -78,23 +50,15 @@ const AllTransactions: React.FC = () => {
         >
           <View>
             <Heading color="purple1" fontSize="sm">
-              Total de despesa
+              Valor em caixa
             </Heading>
             <Heading color="white" fontSize="md">
-              R$ 300,00
-            </Heading>
-          </View>
-
-          <View>
-            <Heading color="purple1" fontSize="sm">
-              Total de Receita
-            </Heading>
-            <Heading color="white" fontSize="md">
-              R$ 3000,00
+              R$ {total.toFixed(2)}
             </Heading>
           </View>
         </Flex>
       </Header>
+
       <ScrollView
         style={{
           marginLeft: 20,
@@ -106,41 +70,53 @@ const AllTransactions: React.FC = () => {
         {data.map(item => {
           return (
             <Card key={item.id}>
-              {item.type === 'revenue' && (
-                <MaterialCommunityIcons
-                  name="plus-circle-outline"
-                  size={23}
-                  color="#666DC3"
-                  style={{ marginRight: 10 }}
-                />
-              )}
-
-              {item.type === 'expenditure' && (
-                <MaterialCommunityIcons
-                  name="minus-circle-outline"
-                  size={23}
-                  color="#666DC3"
-                  style={{ marginRight: 10 }}
-                />
-              )}
-
               <Box style={{ marginRight: 10 }}>
-                <Heading color="purple5" fontSize="md">
-                  {item.title}
-                </Heading>
-                <Text color="white" fontSize="sm">
-                  {item.date}
-                </Text>
-                <Text color="white" fontSize="sm">
-                  {item.description}
-                </Text>
-              </Box>
+                <Flex
+                  direction="row"
+                  alingItems="center"
+                  justifyContent="spaceBetween"
+                >
+                  <Flex direction="row" alingItems="center">
+                    {item.type === 'revenue' && (
+                      <MaterialCommunityIcons
+                        name="plus-circle-outline"
+                        size={23}
+                        color="#666DC3"
+                        style={{ marginRight: 10 }}
+                      />
+                    )}
 
-              <View>
-                <Heading color="purple5" fontSize="md">
-                  {item.value}
-                </Heading>
-              </View>
+                    {item.type === 'expenditure' && (
+                      <MaterialCommunityIcons
+                        name="minus-circle-outline"
+                        size={23}
+                        color="#666DC3"
+                        style={{ marginRight: 10 }}
+                      />
+                    )}
+
+                    <Heading color="purple5" fontSize="md">
+                      {item.title}
+                    </Heading>
+                  </Flex>
+
+                  <Text color="black" fontSize="sm">
+                    {item.date}
+                  </Text>
+                  <View>
+                    <Heading color="purple5" fontSize="md">
+                      {item.type === 'expenditure' && '-'}
+                      R$ {item.value.toFixed(2)}
+                    </Heading>
+                  </View>
+                </Flex>
+
+                <Box style={{ marginTop: 5, marginLeft: 35 }}>
+                  <Text color="black" fontSize="sm">
+                    {item.description}
+                  </Text>
+                </Box>
+              </Box>
             </Card>
           );
         })}

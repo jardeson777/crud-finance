@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StatusBar, View } from 'react-native';
 import Button from '../../components/infra/form/Button';
 import { Box } from '../../components/infra/layout/Box';
@@ -8,64 +8,14 @@ import { Heading } from '../../components/infra/typography/Heading';
 import Text from '../../components/infra/typography/Text';
 import Card from '../../components/ui/Card';
 import { Header } from '../../components/ui/Header';
+import { useData } from '../../global/hook/useData';
+import { sumRevenue } from '../../global/utils';
 
 const Revenue: React.FC = () => {
-  const data = [
-    {
-      id: 1,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 2,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 3,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 4,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 6,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    },
-    {
-      id: 5,
-      type: 'revenue',
-      title: 'Salário',
-      date: '31/01/2021',
-      description:
-        'Descrição simply dummy text of the printing and typesetting industry.',
-      value: '30,00'
-    }
-  ];
+  const { data } = useData();
+  const dataFilter = data.filter(item => item.type === 'revenue');
+
+  const sumTotal = sumRevenue(data);
 
   return (
     <Box backgroundColor="purple1Light">
@@ -82,7 +32,7 @@ const Revenue: React.FC = () => {
               Total de receita
             </Heading>
             <Heading color="white" fontSize="md" textAlign="left">
-              R$ 300,00
+              R$ {sumTotal.toFixed(2)}
             </Heading>
           </View>
 
@@ -110,33 +60,44 @@ const Revenue: React.FC = () => {
           marginBottom: 70
         }}
       >
-        {data.map(item => {
+        {dataFilter.map(item => {
           return (
             <Card key={item.id}>
-              <MaterialCommunityIcons
-                name="plus-circle-outline"
-                size={23}
-                color="#666DC3"
-                style={{ marginRight: 10 }}
-              />
-
               <Box style={{ marginRight: 10 }}>
-                <Heading color="purple5" fontSize="md">
-                  {item.title}
-                </Heading>
-                <Text color="white" fontSize="sm">
-                  {item.date}
-                </Text>
-                <Text color="white" fontSize="sm">
-                  {item.description}
-                </Text>
-              </Box>
+                <Flex
+                  direction="row"
+                  alingItems="center"
+                  justifyContent="spaceBetween"
+                >
+                  <Flex direction="row" alingItems="center">
+                    <MaterialCommunityIcons
+                      name="plus-circle-outline"
+                      size={23}
+                      color="#666DC3"
+                      style={{ marginRight: 10 }}
+                    />
 
-              <View>
-                <Heading color="purple5" fontSize="md">
-                  {item.value}
-                </Heading>
-              </View>
+                    <Heading color="purple5" fontSize="md">
+                      {item.title}
+                    </Heading>
+                  </Flex>
+
+                  <Text color="black" fontSize="sm">
+                    {item.date}
+                  </Text>
+                  <View>
+                    <Heading color="purple5" fontSize="md">
+                      R$ {item.value.toFixed(2)}
+                    </Heading>
+                  </View>
+                </Flex>
+
+                <Box style={{ marginTop: 5, marginLeft: 35 }}>
+                  <Text color="black" fontSize="sm">
+                    {item.description}
+                  </Text>
+                </Box>
+              </Box>
             </Card>
           );
         })}

@@ -4,10 +4,14 @@ import { Box } from '../../../infra/layout/Box';
 const Container: React.FC = ({ children }) => {
   return (
     <Box
-      backgroundColor="purple2"
+      backgroundColor="white"
       size="fullWidth"
-      radius="md"
-      style={{ marginBottom: 10 }}
+      radius="sm"
+      style={{
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#e9e9e9'
+      }}
     >
       {children}
     </Box>

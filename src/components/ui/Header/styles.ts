@@ -4,7 +4,7 @@ export const Container = styled('View', {
   backgroundColor: '$purple5',
   paddingTop: 20,
   width: '100%',
-  borderRadius: 15,
+  borderRadius: 4,
   borderTopLeftRadius: 0,
   borderTopRightRadius: 0
 });

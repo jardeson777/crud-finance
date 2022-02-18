@@ -1,6 +1,11 @@
 import React from 'react';
+import { DataContextProvider } from './src/global/hook/useData';
 import { MyTabs } from './src/routes';
 
 export default function App() {
-  return <MyTabs />;
+  return (
+    <DataContextProvider>
+      <MyTabs />
+    </DataContextProvider>
+  );
 }

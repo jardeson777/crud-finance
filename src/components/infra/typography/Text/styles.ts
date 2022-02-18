@@ -26,6 +26,9 @@ export const Container = styled('Text', {
       },
       purple5: {
         color: '$purple5'
+      },
+      black: {
+        color: '$black'
       }
     },
     textAlign: {

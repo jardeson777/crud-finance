@@ -17,6 +17,9 @@ export const Container = styled('View', {
       },
       purple2: {
         backgroundColor: '$purple2'
+      },
+      grey1: {
+        backgroundColor: '$grey1'
       }
     },
     size: {
